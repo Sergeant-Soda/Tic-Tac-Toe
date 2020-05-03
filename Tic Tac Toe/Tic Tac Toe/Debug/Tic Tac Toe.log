@@ -1,0 +1,5 @@
+﻿  Tic Tac Toe.c
+C:\Users\micha\source\repos\Tic Tac Toe\Tic Tac Toe\Tic Tac Toe.c(135,30): warning C4133: 'function': incompatible types - from 'FILE *' to 'const char *'
+C:\Users\micha\source\repos\Tic Tac Toe\Tic Tac Toe\Tic Tac Toe.c(148,1): warning C4047: 'initializing': 'time_t' differs in levels of indirection from 'time_t *'
+C:\Users\micha\source\repos\Tic Tac Toe\Tic Tac Toe\Tic Tac Toe.c(149,1): warning C4047: 'initializing': 'time_t' differs in levels of indirection from 'time_t *'
+  Tic Tac Toe.vcxproj -> C:\Users\micha\source\repos\Tic Tac Toe\Debug\Tic Tac Toe.exe
