@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#define CURL_STATICLIB
+#include <curl/curl.h>
 
 char draw[4][4]; /* the tic tac toe matrix */
 bool isDraw = false;
@@ -127,6 +129,21 @@ char check()
 	return ' ';
 }
 
+void PressKeyToContinue()
+{
+	FILE* osCheck = fopen("c:\\Windows\\System32\\cmd.exe", "r");
+
+	if ((osCheck = fopen(osCheck, "r")))	//	IF OS IS WINDOWS BASED
+	{
+		fclose(osCheck);
+		getchar();
+	}
+	else
+	{
+		getch();
+	}
+}
+
 void ClearScreen()
 {
 
@@ -143,6 +160,32 @@ void ClearScreen()
 	}
 }
 
+void GetSource()
+{
+	CURL* curl;
+	CURLcode res;
+
+	curl = curl_easy_init();
+	if (curl) {
+		curl_easy_setopt(curl, CURLOPT_URL, "https://raw.githubusercontent.com/Sergeant-Soda/Tic-Tac-Toe/master/Tic%20Tac%20Toe/Tic%20Tac%20Toe/Tic%20Tac%20Toe.c");
+		curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.117 Mobile Safari/537.36");
+		/* example.com is redirected, so we tell libcurl to follow redirection */
+		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+		/* Perform the request, res will get the return code */
+		res = curl_easy_perform(curl);
+		/* Check for errors */
+		if (res != CURLE_OK)
+		{
+			fprintf(stderr, "curl_easy_perform() failed: %s\n",
+				curl_easy_strerror(res));
+
+		}
+
+		/* always cleanup */
+		curl_easy_cleanup(curl);
+	}
+}
+
 int main()
 {
 	time_t time_start = (time_t*)malloc(sizeof(time_t));
@@ -152,7 +195,7 @@ int main()
 	int end = 0;
 	int selection = 0;
 	char goback = ' ';
-	
+
 	FILE* fWin;
 	FILE* fLos;
 	fWin = fopen("wins.txt", "r+");
@@ -184,6 +227,7 @@ int main()
 		printf("\n0. Exit");
 		printf("\n1. Play!");
 		printf("\n2. About the team");
+		printf("\n3. View source code from GitHub");
 		printf("\nChoice:");
 		scanf("%i", &selection);
 
@@ -268,6 +312,13 @@ int main()
 			printf("\nCPU AI made by Jacob and Michael");
 			printf("\nCheckforwin function made by Jacob and Michael");
 			printf("\nExternal API added by Mirai and Brandon\n");
+			break;
+		case 3:
+			ClearScreen();
+			GetSource();
+			printf("\nPress any key to continue...");
+			PressKeyToContinue();
+			ClearScreen();
 			break;
 		}
 	} while (end == 0);
