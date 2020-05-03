@@ -129,6 +129,21 @@ char check()
 	return ' ';
 }
 
+bool TestConnection()
+{
+	CURL* curl = curl_easy_init();
+	if (curl) {
+		CURLcode ret;
+		curl_easy_setopt(curl, CURLOPT_URL, "https://example.com/");
+		curl_easy_setopt(curl, CURLOPT_CONNECT_ONLY, 1L);
+		ret = curl_easy_perform(curl);
+		if (ret == CURLE_OK)
+			return true;
+		else
+			return false;
+	}
+}
+
 void PressKeyToContinue()
 {
 	FILE* osCheck = fopen("c:\\Windows\\System32\\cmd.exe", "r");
@@ -162,6 +177,11 @@ void ClearScreen()
 
 void GetSource()
 {
+	if (TestConnection() == false)
+	{
+		printf("ERROR: No internet connection has been detected");
+		return;
+	}
 	CURL* curl;
 	CURLcode res;
 
