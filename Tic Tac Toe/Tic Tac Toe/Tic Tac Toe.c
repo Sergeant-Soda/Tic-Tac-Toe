@@ -1,3 +1,13 @@
+/*
+Names: Michael Kelly, Jacob Hessler, Brandon Smid, Brendan Dunne, Mirai Obiraki
+CNIT 31500
+Prof. Matson
+05/04/2020
+
+Our project is a simple Tic-Tac-Toe game that has the ability to
+count wins versus losses as well as view the source code on GitHub
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -144,35 +154,13 @@ bool TestConnection()
 	}
 }
 
-void PressKeyToContinue()
-{
-	FILE* osCheck = fopen("c:\\Windows\\System32\\cmd.exe", "r");
-
-	if ((osCheck = fopen(osCheck, "r")))	//	IF OS IS WINDOWS BASED
-	{
-		fclose(osCheck);
-		getchar();
-	}
-	else
-	{
-		getch();
-	}
-}
-
 void ClearScreen()
 {
-
-	FILE* osCheck = fopen("c:\\Windows\\System32\\cmd.exe", "r");
-
-	if ((osCheck = fopen(osCheck, "r")))
-	{
-		fclose(osCheck);
-		system("clear");
-	}
-	else
-	{
-		system("cls");
-	}
+#ifdef _WIN32
+	system("cls");
+#else
+	system("clear");
+#endif // _WIN32
 }
 
 void GetSource()
@@ -185,6 +173,8 @@ void GetSource()
 	CURL* curl;
 	CURLcode res;
 
+	printf("Loading...");
+
 	curl = curl_easy_init();
 	if (curl) {
 		curl_easy_setopt(curl, CURLOPT_URL, "https://raw.githubusercontent.com/Sergeant-Soda/Tic-Tac-Toe/master/Tic%20Tac%20Toe/Tic%20Tac%20Toe/Tic%20Tac%20Toe.c");
@@ -196,6 +186,7 @@ void GetSource()
 		/* Check for errors */
 		if (res != CURLE_OK)
 		{
+			ClearScreen();
 			fprintf(stderr, "curl_easy_perform() failed: %s\n",
 				curl_easy_strerror(res));
 
@@ -336,9 +327,8 @@ int main()
 		case 3:
 			ClearScreen();
 			GetSource();
-			printf("\nPress any key to continue...");
-			PressKeyToContinue();
-			ClearScreen();
+			printf("\n==================== END OF CODE ====================\n");
+			//ClearScreen();
 			break;
 		}
 	} while (end == 0);
