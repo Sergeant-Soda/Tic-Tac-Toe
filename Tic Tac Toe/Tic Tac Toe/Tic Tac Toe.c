@@ -173,7 +173,7 @@ void GetSource()
 	CURL* curl;
 	CURLcode res;
 
-	printf("Loading...");
+	//printf("Loading...");
 
 	curl = curl_easy_init();
 	if (curl) {
